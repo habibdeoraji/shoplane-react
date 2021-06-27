@@ -1,10 +1,116 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import "./productdetails.css";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import { addToCart } from "../../actions/index";
+import Spinner from "react-bootstrap/Spinner";
 
+const ProductDetails = (props) => {
+    const [productDetails, setProductDetails] = useState({});
+    const [loading, setLoading] = useState(true);
+    const { id } = useParams() || window.location.pathname.slice(9);
 
-const ProductDetails = () => {
-    return (<div style={{ marginTop: "100px" }}>
-        ProductDetails Page
-    </div>);
-}
+    async function getProductById() {
+        const productDetailsById = props.productList.filter(
+            (product) => product.id === id
+        )[0];
+        productDetailsById && setLoading(false);
+        setProductDetails(productDetailsById);
+    }
 
-export default ProductDetails;
+    useEffect(() => {
+        getProductById();
+    });
+    console.log(props.cart)
+
+    // Add to cart
+
+    return (
+        <>
+            {loading ? (
+                <div
+                    style={{
+                        margin: "45vh auto",
+                        width: "100px",
+                    }}
+                >
+                    <Spinner animation="border" variant="primary" size="l" />
+                </div>
+            ) : (
+                    <div
+                        style={{
+                            marginTop: "100px",
+                        }}
+                        className="details_content"
+                    >
+                        <div className="preview_card">
+                            <img
+                                className="preview_image"
+                                src={productDetails.photos[0]}
+                                alt="prv"
+                            />
+                        </div>
+                        <div className="content_card">
+                            <h1 className="product-name"> {productDetails.name} </h1>
+                            <h1 className="product_brand"> {productDetails.brand} </h1>
+                            <h3 className="price_prefix">
+                                Price: Rs <span> {productDetails.price} </span>
+                            </h3>
+                            <h3 className="description">
+                                Description
+              <p className="description_text"> {productDetails.description} </p>
+                            </h3>
+                            <h3 className="product_preview"> Product Preview </h3>
+                            <div>
+                                {productDetails.photos.map((photo, index) => (
+                                    <img
+                                        className="preview_photo active"
+                                        src={photo}
+                                        alt="prv"
+                                        key={index}
+                                    />
+                                ))}
+                            </div>
+                            <button
+                                className="add_button"
+                                onClick={() => {
+                                    const cartItem = props.cart;
+                                    let indexOfNewProduct = cartItem.findIndex(item => item.id === productDetails.id);
+                                    // let updatedCartItem = indexOfNewProduct === -1 && cartItem.push(productDetails)
+                                    if (indexOfNewProduct === -1) {
+                                        cartItem.push(productDetails)
+                                        productDetails.quantity = 1;
+                                        props.addProductToCart(cartItem)
+
+                                    } else {
+                                        cartItem[indexOfNewProduct].quantity += 1;
+                                        // console.log(cartItem)
+                                        props.addProductToCart(cartItem)
+
+                                    }
+                                    // console.log(updatedCartItem);
+                                    // props.addProductToCart(updatedCartItem)
+                                }}
+                            >
+                                Add to Cart
+            </button>
+                        </div>
+                    </div>
+                )}
+        </>
+    );
+};
+
+const mapStateToProps = (state) => ({
+    productList: state.productList,
+    productById: state.productById,
+    cart: state.cart
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    addProductToCart: (product) =>
+        dispatch(addToCart((product)))
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

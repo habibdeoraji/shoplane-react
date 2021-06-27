@@ -7,8 +7,11 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import "./navbar.css";
+import { connect } from "react-redux";
 
-const NavBar = () => {
+
+const NavBar = ({ cart }) => {
+
   return (
     <div className="top_bar">
       <div className="logo">
@@ -22,17 +25,17 @@ const NavBar = () => {
         <Link to="/" className="nav-link">
           HOME
         </Link>
-        <Link to="/home#clothing" className="nav-link">
+        <p className="nav-link clothings" onClick={(e) => { console.log(e.target) }}>
           CLOTHINGS
-        </Link>
-        <Link to="/home#assessories" className="nav-link">
+        </p>
+        <p className="nav-link accessories">
           ACCESSORIES
-        </Link>
+        </p>
       </div>
       <div className="icons">
         <FontAwesomeIcon icon={faSearch} className="icon-item" />
         <Link to="/checkout" className="cart-wrapper">
-          <span className="cart-count">{0}</span>
+          <span className="cart-count">{cart.length}</span>
           <FontAwesomeIcon
             icon={faShoppingCart}
             className="icon-item cart"
@@ -44,4 +47,11 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+
+const mapStateToProps = (state) => ({
+  cart: state.cart
+});
+
+
+
+export default connect(mapStateToProps, null)(NavBar);
