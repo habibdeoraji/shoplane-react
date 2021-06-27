@@ -8,6 +8,7 @@ import Spinner from "react-bootstrap/Spinner";
 const ProductDetails = (props) => {
     const [productDetails, setProductDetails] = useState({});
     const [loading, setLoading] = useState(true);
+    const [activeIndex, setActiveIndex] = useState(0);
     const { id } = useParams() || window.location.pathname.slice(9);
 
     async function getProductById() {
@@ -21,9 +22,6 @@ const ProductDetails = (props) => {
     useEffect(() => {
         getProductById();
     });
-    console.log(props.cart)
-
-    // Add to cart
 
     return (
         <>
@@ -46,7 +44,7 @@ const ProductDetails = (props) => {
                         <div className="preview_card">
                             <img
                                 className="preview_image"
-                                src={productDetails.photos[0]}
+                                src={productDetails.photos[activeIndex]}
                                 alt="prv"
                             />
                         </div>
@@ -64,10 +62,10 @@ const ProductDetails = (props) => {
                             <div>
                                 {productDetails.photos.map((photo, index) => (
                                     <img
-                                        className="preview_photo active"
+                                        className={activeIndex === index ? "preview_photo active" : "preview_photo"}
                                         src={photo}
                                         alt="prv"
-                                        key={index}
+                                        key={index} onClick={() => setActiveIndex(index)}
                                     />
                                 ))}
                             </div>
@@ -76,7 +74,6 @@ const ProductDetails = (props) => {
                                 onClick={() => {
                                     const cartItem = props.cart;
                                     let indexOfNewProduct = cartItem.findIndex(item => item.id === productDetails.id);
-                                    // let updatedCartItem = indexOfNewProduct === -1 && cartItem.push(productDetails)
                                     if (indexOfNewProduct === -1) {
                                         cartItem.push(productDetails)
                                         productDetails.quantity = 1;
@@ -84,12 +81,8 @@ const ProductDetails = (props) => {
 
                                     } else {
                                         cartItem[indexOfNewProduct].quantity += 1;
-                                        // console.log(cartItem)
                                         props.addProductToCart(cartItem)
-
                                     }
-                                    // console.log(updatedCartItem);
-                                    // props.addProductToCart(updatedCartItem)
                                 }}
                             >
                                 Add to Cart

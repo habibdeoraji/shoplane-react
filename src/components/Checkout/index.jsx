@@ -1,10 +1,13 @@
 import React from 'react';
 import "./checkout.css";
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { emptyCart } from "../../actions/index";
 
 
-const Checkout = ({ cart }) => {
-    const totalAmount = cart.map(prod => prod.quantity * prod.price).reduce((total, value) => total + value)
+
+const Checkout = ({ cart, clearCart }) => {
+    const totalAmount = cart.length > 0 ? cart.map(prod => prod.quantity * prod.price).reduce((total, value) => total + value) : 0;
     return (
         <div className="content-wrapper">
             <div className="left-section">
@@ -24,7 +27,7 @@ const Checkout = ({ cart }) => {
                 <div className="place-order-card">
                     <h2>Total amount</h2>
                     <p className="checkout-total-amount">Amount: Rs <span>{totalAmount}</span> </p>
-                    <button type="submit" className="place-order-button">Place Order</button>
+                    {cart.length > 0 ? <Link to="/order-confirmation" className="place-order-button" onClick={() => clearCart()}>Place Order</Link> : <Link to="/checkout" className="place-order-button" onClick={() => alert("Add item to place the order!")}>Place Order</Link>}
                 </div>
             </div>
         </div >
@@ -33,12 +36,19 @@ const Checkout = ({ cart }) => {
 
 
 
+
+
 const mapStateToProps = (state) => ({
     cart: state.cart
 })
 
+const mapDispatchToProps = (dispatch) => ({
+    clearCart: () =>
+        dispatch(emptyCart([]))
+})
 
-export default connect(mapStateToProps, null)(Checkout)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
 
 
 

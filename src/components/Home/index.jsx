@@ -11,10 +11,12 @@ const Home = ({ productList }) => {
         }>
             <h2 className="clothing-item">Clothing for Men and Women</h2>
             <div style={{ display: "flex", flexWrap: "wrap", padding: "10px 8%" }}>
-                {productList.map(product => <Card {...product} key={Math.random()} />)}
+                {productList.map(product => (product.isAccessory) || <Card {...product} key={Math.random()} />)}
             </div>
             <h2>Accessories for Men and Women</h2>
-
+            <div style={{ display: "flex", flexWrap: "wrap", padding: "10px 8%" }}>
+                {productList.map(product => !(product.isAccessory) || <Card {...product} key={Math.random()} />)}
+            </div>
         </div >);
 }
 

@@ -9,6 +9,7 @@ import axios from "axios";
 import { productApi } from "./utils/mockApis";
 import { connect } from "react-redux";
 import { setProductList } from "./actions/index";
+import OrderConfirmation from './components/OrderConfirmation';
 
 
 
@@ -33,6 +34,7 @@ const App = (props) => {
           <Route path="/" exact><Home test={"test"} /></Route>
           <Route path="/checkout"><Checkout /></Route>
           <Route path="/details/:id"><ProductDetails /></Route>
+          <Route path="/order-confirmation"><OrderConfirmation /></Route>
           <Route path="*"><h1 style={{ marginTop: "100px" }}>Error Page</h1></Route>
         </Switch>
       </Router>
