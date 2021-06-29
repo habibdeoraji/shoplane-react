@@ -10,6 +10,8 @@ import { productApi } from "./utils/mockApis";
 import { connect } from "react-redux";
 import { setProductList } from "./actions/index";
 import OrderConfirmation from './components/OrderConfirmation';
+import HomeCarousel from './components/Carousel';
+import Feature from './components/Feature';
 
 
 
@@ -29,9 +31,11 @@ const App = (props) => {
   return (
     <div>
       <Router>
-        <NavBar test={"test"} />
+        <NavBar />
+        <HomeCarousel />
+        <Feature />
         <Switch>
-          <Route path="/" exact><Home test={"test"} /></Route>
+          <Route path="/" exact><Home /></Route>
           <Route path="/checkout"><Checkout /></Route>
           <Route path="/details/:id"><ProductDetails /></Route>
           <Route path="/order-confirmation"><OrderConfirmation /></Route>

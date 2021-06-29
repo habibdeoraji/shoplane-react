@@ -1,0 +1,42 @@
+.custom_carousel {
+    border: none !important;
+}
+
+
+.active {
+    border: none !important;
+}
+
+.carousel-indicators li {
+    box-sizing: content-box;
+    flex: 0 1 auto;
+    width: 6px;
+    height: 6px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 20px !important;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: black !important;
+    background-clip: padding-box;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-radius: 50%;
+    opacity: .5;
+    transition: opacity .6s ease;
+}
+
+
+.carousel-indicators .active {
+    opacity: 1;
+    border-top: 10px solid transparent !important;
+    border-bottom: 10px solid transparent !important;
+}
+
+dl,
+ol,
+ul {
+    margin-top: 0;
+    margin-bottom: -25px;
+    margin-left: 1rem;
+}

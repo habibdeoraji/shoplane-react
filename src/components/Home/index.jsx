@@ -7,7 +7,7 @@ import { setProductList } from "../../actions/index"
 const Home = ({ productList }) => {
     return (
 
-        <div style={{ marginTop: "100px", padding: "4%", justifyContent: "center" }
+        <div style={{ marginTop: "20px", padding: "4%", justifyContent: "center" }
         }>
             <h2 className="clothing-item">Clothing for Men and Women</h2>
             <div style={{ display: "flex", flexWrap: "wrap", padding: "10px 8%" }}>
