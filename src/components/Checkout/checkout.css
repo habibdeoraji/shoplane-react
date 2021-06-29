@@ -2,6 +2,7 @@
     display: flex;
     padding: 120px 10%;
     justify-content: space-between;
+    min-height: 76vh
 }
 
 .left-section {

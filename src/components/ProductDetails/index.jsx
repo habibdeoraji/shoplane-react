@@ -25,6 +25,7 @@ const ProductDetails = (props) => {
 
     return (
         <>
+
             {loading ? (
                 <div
                     style={{
@@ -49,44 +50,56 @@ const ProductDetails = (props) => {
                             />
                         </div>
                         <div className="content_card">
-                            <h1 className="product-name"> {productDetails.name} </h1>
-                            <h1 className="product_brand"> {productDetails.brand} </h1>
-                            <h3 className="price_prefix">
-                                Price: Rs <span> {productDetails.price} </span>
-                            </h3>
-                            <h3 className="description">
-                                Description
-              <p className="description_text"> {productDetails.description} </p>
-                            </h3>
-                            <h3 className="product_preview"> Product Preview </h3>
-                            <div>
-                                {productDetails.photos.map((photo, index) => (
-                                    <img
-                                        className={activeIndex === index ? "preview_photo active" : "preview_photo"}
-                                        src={photo}
-                                        alt="prv"
-                                        key={index} onClick={() => setActiveIndex(index)}
-                                    />
-                                ))}
+                            <div className="product_description">
+                                <h1 className="product-name"> {productDetails.name} </h1>
+                                <h4 className="product_brand"> {productDetails.brand} </h4>
+                                <h3 className="price_prefix">
+                                    Price: Rs <span> {productDetails.price} </span>
+                                </h3>
+                                <div className="description">
+                                    <h3> Description</h3>
+                                    <p className="description_text">
+
+                                        {productDetails.description}
+                                    </p>
+                                </div>
+                                <h3 className="product_preview"> Product Preview </h3>
+                                <div>
+
+                                    {productDetails.photos.map((photo, index) => (
+                                        <img
+                                            className={
+                                                activeIndex === index
+                                                    ? "preview_photo active-preview"
+                                                    : "preview_photo"
+                                            }
+                                            src={photo}
+                                            alt="prv"
+                                            key={index}
+                                            onClick={() => setActiveIndex(index)}
+                                        />
+                                    ))}
+                                </div>
                             </div>
                             <button
                                 className="add_button"
                                 onClick={() => {
                                     const cartItem = props.cart;
-                                    let indexOfNewProduct = cartItem.findIndex(item => item.id === productDetails.id);
+                                    let indexOfNewProduct = cartItem.findIndex(
+                                        (item) => item.id === productDetails.id
+                                    );
                                     if (indexOfNewProduct === -1) {
-                                        cartItem.push(productDetails)
+                                        cartItem.push(productDetails);
                                         productDetails.quantity = 1;
-                                        props.addProductToCart(cartItem)
-
+                                        props.addProductToCart(cartItem);
                                     } else {
                                         cartItem[indexOfNewProduct].quantity += 1;
-                                        props.addProductToCart(cartItem)
+                                        props.addProductToCart(cartItem);
                                     }
                                 }}
                             >
                                 Add to Cart
-            </button>
+                            </button>
                         </div>
                     </div>
                 )}
@@ -97,13 +110,11 @@ const ProductDetails = (props) => {
 const mapStateToProps = (state) => ({
     productList: state.productList,
     productById: state.productById,
-    cart: state.cart
+    cart: state.cart,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addProductToCart: (product) =>
-        dispatch(addToCart((product)))
-
+    addProductToCart: (product) => dispatch(addToCart(product)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);
