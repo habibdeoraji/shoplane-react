@@ -8,29 +8,46 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./navbar.css";
 import { connect } from "react-redux";
-
+import { Link as ScrollLink } from "react-scroll";
 
 const NavBar = ({ cart }) => {
-
   return (
-    <div className="top_bar">
+    <nav className="top_bar">
       <div className="logo">
-        <Link to="/" className="logo-brand">
+        <Link to="/" className="logo-brand" onClick={() => window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        })}>
           <h4>
             <span>SHOP</span>LANE
           </h4>
         </Link>
       </div>
       <div className="nav-link-wrapper">
-        <Link to="/" className="nav-link">
+        <Link to="/" className="nav-link" onClick={() => window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        })}>
           HOME
         </Link>
-        <p className="nav-link clothings" onClick={(e) => { console.log(e.target) }}>
+        <ScrollLink
+          to="clothing-section"
+          spy={true}
+          smooth={true}
+          duration={500}
+          className='nav-link clothings'
+        >
           CLOTHINGS
-        </p>
-        <p className="nav-link accessories">
+        </ScrollLink>
+        <ScrollLink
+          to={"accessories-section"}
+          spy={true}
+          smooth={true}
+          duration={500}
+          className="nav-link accessories"
+        >
           ACCESSORIES
-        </p>
+        </ScrollLink>
       </div>
       <div className="icons">
         <FontAwesomeIcon icon={faSearch} className="icon-item" />
@@ -43,7 +60,7 @@ const NavBar = ({ cart }) => {
         </Link>
         <FontAwesomeIcon icon={faUserCircle} className="icon-item" />
       </div>
-    </div>
+    </nav >
   );
 };
 
