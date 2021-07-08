@@ -9,8 +9,10 @@ import {
 import "./navbar.css";
 import { connect } from "react-redux";
 import { Link as ScrollLink } from "react-scroll";
+import { useHistory } from "react-router-dom";
 
 const NavBar = ({ cart }) => {
+  const history = useHistory();
   return (
     <nav className="top_bar">
       <div className="logo">
@@ -36,6 +38,8 @@ const NavBar = ({ cart }) => {
           smooth={true}
           duration={500}
           className='nav-link clothings'
+          onClick={() =>
+            history.push('/')}
         >
           CLOTHINGS
         </ScrollLink>
@@ -45,6 +49,9 @@ const NavBar = ({ cart }) => {
           smooth={true}
           duration={500}
           className="nav-link accessories"
+
+          onClick={() =>
+            history.push('/')}
         >
           ACCESSORIES
         </ScrollLink>
